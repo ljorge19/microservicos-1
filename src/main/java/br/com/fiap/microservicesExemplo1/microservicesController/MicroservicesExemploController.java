@@ -16,10 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.*;
 
 
-
-
-
-
 @Slf4j
 @RestController
 public class MicroservicesExemploController {
@@ -74,6 +70,7 @@ public class MicroservicesExemploController {
                 item.setEmail(pedidoDto.getEmail());
                 item.setItemAdquirido(pedidoDto.getItemAdquirido());
                 item.setNome(pedidoDto.getNome());
+                item.setNomeCliente(pedidoDto.getNomeCliente());
                 item.setShipping(pedidoDto.getShipping());
 
                 System.out.printf("item do findById", item);
@@ -86,12 +83,12 @@ public class MicroservicesExemploController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody PedidoDto pedido, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> create(@RequestBody PedidoDto pedido, UriComponentsBuilder ucBuilder) {
 
 
         listaPedidos.add(pedido);
         System.out.println("Criado o pedido " + pedido.getItemAdquirido());
-        System.out.println("Lista " + listaPedidos.toString());
+        System.out.println("nome do cliente " + pedido.getNomeCliente());
         return null;
     }
 
@@ -111,7 +108,37 @@ public class MicroservicesExemploController {
 
         }
 
+    }
 
+    @RequestMapping(value = "/alterar/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Void> alterar(@RequestBody PedidoDto pedido, UriComponentsBuilder ucBuilder,
+                                        @PathVariable(value = "id", required = true) int id) {
+
+        PedidoDto item = null;
+
+        for (int i = 0; i < listaPedidos.size(); i++) {
+            if (listaPedidos.get(i).getIdPedido() == id) {
+
+                listaPedidos.remove(i);
+
+                item = new PedidoDto();
+                item.setIdPedido(pedido.getIdPedido());
+                item.setEmail(pedido.getEmail());
+                item.setItemAdquirido(pedido.getItemAdquirido());
+                item.setNome(pedido.getNome());
+                item.setNomeCliente(pedido.getNomeCliente());
+                item.setShipping(pedido.getShipping());
+
+                listaPedidos.add(item);
+
+                System.out.printf("item alterado");
+
+            }
+        }
+
+
+
+        return null;
     }
 
 
