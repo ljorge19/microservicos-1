@@ -18,29 +18,12 @@ import java.util.*;
 
 @Slf4j
 @RestController
+@RequestMapping(value = "/order-service")
 public class MicroservicesExemploController {
 
     ArrayList<PedidoDto> listaPedidos = new ArrayList<PedidoDto>();
 
-    @GetMapping("/exemplo-1/{firstName}/{lastName}")
-    public ResponseEntity getHello(@PathVariable(value = "firstName", required = true) String firstName,
-                                   @PathVariable(value = "lastName", required = true) String lastName) {
-        System.out.printf("Hello %s %s", firstName, lastName);
 
-        log.info("Hello %s %s", firstName, lastName);
-
-        return new ResponseEntity(HttpStatus.OK);
-
-    }
-
-    @GetMapping("/exemplo-1")
-    public ResponseEntity getHello(Person person) {
-
-        log.info("Hello %s %s", person.getFirstName(), person.getLastName());
-
-        return new ResponseEntity<>(person, HttpStatus.OK);
-
-    }
 
     @GetMapping("/pedido")
     public PedidoDto retornaPedido() {
@@ -135,8 +118,6 @@ public class MicroservicesExemploController {
 
             }
         }
-
-
 
         return null;
     }
