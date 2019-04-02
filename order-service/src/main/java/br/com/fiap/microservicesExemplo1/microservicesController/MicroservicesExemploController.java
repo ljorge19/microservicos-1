@@ -2,6 +2,7 @@ package br.com.fiap.microservicesExemplo1.microservicesController;
 
 import br.com.fiap.microservicesExemplo1.microservicesEntity.Person;
 import br.com.fiap.microservicesExemplo1.microservicesEntity.PedidoDto;
+import br.com.fiap.microservicesExemplo1.microservicesHandlingException.OrderNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +41,14 @@ public class MicroservicesExemploController {
     }
 
     @GetMapping("/findById/{id}")
-    public PedidoDto retornaPedido(@PathVariable(value = "id", required = true) int id) {
+    public PedidoDto retornaPedido(@PathVariable(value = "id", required = true) int id) throws OrderNotFoundException {
 
         PedidoDto item = null;
 
         for (PedidoDto pedidoDto : listaPedidos) {
             if (pedidoDto.getIdPedido() == id) {
+
+
 
                 item = new PedidoDto();
 
@@ -59,6 +62,14 @@ public class MicroservicesExemploController {
                 System.out.printf("item do findById", item);
 
             }
+
+        }
+
+        if (item == null) {
+
+            System.out.printf("passei aqui item", item);
+             throw  new OrderNotFoundException(PedidoDto.class, "id", "pedido não encontrado");
+
 
         }
 
@@ -78,6 +89,8 @@ public class MicroservicesExemploController {
 
     @GetMapping("/delete/{id}")
     public void deletaPedido(@PathVariable(value = "id", required = true) int id) {
+
+
 
         PedidoDto item = null;
 
