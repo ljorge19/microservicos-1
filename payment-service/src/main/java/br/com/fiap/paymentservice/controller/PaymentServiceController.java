@@ -20,7 +20,7 @@ public class PaymentServiceController {
     @GetMapping("/{id}")
     public ResponseEntity<PaymentServiceDto> load(@PathVariable(value="id",required = true) Integer id){
 
-        log.info("getPayments Id: {}", id );
+        //log.info("getPayments Id: {}", id );
 
         return new ResponseEntity<>(paymentDto, HttpStatus.OK);
 
@@ -29,7 +29,7 @@ public class PaymentServiceController {
     @GetMapping()
     public ResponseEntity<ArrayList<PaymentServiceDto>> all(){
 
-        log.info("getPayments All");
+        //log.info("getPayments All");
 
         ArrayList<PaymentServiceDto> paymentDto = new ArrayList<>();
 
